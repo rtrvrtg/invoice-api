@@ -1,4 +1,3 @@
-require 'sinatra'
 require 'sinatra/base'
 require 'sinatra/jsonp'
 require 'sinatra/respond_to'
@@ -6,7 +5,7 @@ require './lib/auth'
 
 # ##### INVOICE APP
 
-class InvoiceInvoices < Sinatra::Base
+class Invoices < Sinatra::Base
   helpers Sinatra::APIKeyAuth
   helpers Sinatra::Jsonp
   register Sinatra::RespondTo

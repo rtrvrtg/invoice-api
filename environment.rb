@@ -1,4 +1,4 @@
-require 'sinatra' unless defined?(Sinatra)
+require 'sinatra'
 require 'active_resource'
 require 'haml'
 require 'data_mapper'
