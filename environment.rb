@@ -31,7 +31,7 @@ end
 Haml::Template.options[:attr_wrapper] = '"'
 
 # Model setup
-unless settings.database_url.nil?
+unless settings.database_url.blank?
   DataMapper.finalize
   DataMapper.setup(:default, settings.database_url)
 end
