@@ -28,6 +28,8 @@ require env_path if File.exists?(env_path)
 Haml::Template.options[:attr_wrapper] = '"'
 
 # Model setup
-DataMapper.finalize
-DataMapper.setup(:default, settings.database_url)
+unless settings.database_url.nil?
+  DataMapper.finalize
+  DataMapper.setup(:default, settings.database_url)
+end
 
