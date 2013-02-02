@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'sinatra'
+require 'sinatra/base'
 require 'sinatra/jsonp'
 require 'sinatra-websocket'
 require 'fileutils'
@@ -7,12 +7,13 @@ require 'fileutils'
 # Pulls in settings and required gems.
 require File.expand_path('environment.rb', File.dirname(__FILE__))
 
-# ##### WEBSOCKET ROUTES
+# Load all apps
+Dir[File.expand_path('app/*.rb', File.dirname(__FILE__))].each {|f| require f }
 
-set :server, 'thin'
-set :sockets, []
+# ##### APPLICATION
 
-# ##### PULLS IN COMPONENTS
-
-#require File.expand_path('app_entity.rb', File.dirname(__FILE__))
-#require File.expand_path('invoice_entity.rb', File.dirname(__FILE__))
+class InvoicesApp < Sinatra::Base
+  use Base
+  use Apps
+  use Invoices
+end
