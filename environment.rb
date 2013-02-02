@@ -20,8 +20,9 @@ configure do
   set :views, File.dirname(__FILE__) + "/views"
 end
 
-# Per-environment config
-require File.expand_path('config/environments.rb', File.dirname(__FILE__))
+# Per-environment config. Added condition just in case rake hasnt created it yet
+env_path = File.expand_path('config/environments.rb', File.dirname(__FILE__))
+require env_path if File.exists?(env_path)
 
 # Stop haml being a dick.
 Haml::Template.options[:attr_wrapper] = '"'
