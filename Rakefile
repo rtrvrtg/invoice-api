@@ -1,17 +1,22 @@
 require 'rubygems'
 require 'fileutils'
-require File.expand_path('environment.rb', File.dirname(__FILE__))
+
+# Utility task that's used by environment-dependent tasks.
+# (Convention borrowed from Rails' Rake tasks.)
+task :environment do
+  require File.expand_path('environment.rb', File.dirname(__FILE__))
+end
 
 namespace :db do
   desc 'Create the databases and, if they exist, clear the data in them.'
-  task :create do
+  task :create => :environment do
     Auth.auto_migrate!
     App.auto_migrate!
     Invoice.auto_migrate!
   end
   
   desc 'Upgrade db tables to most recent state.'
-  task :upgrade do
+  task :upgrade => :environment do
     Auth.auto_upgrade!
     App.auto_upgrade!
     Invoice.auto_upgrade!
@@ -25,11 +30,12 @@ namespace :invoice do
     config   = File.expand_path('config/environments.rb', File.dirname(__FILE__))
 
     raise "The environments.rb config already exists!" if File.exists?(config)
+    mkdir_p File.dirname(config)
     cp template, config, :verbose => true
   end
   
   desc 'Adds a user'
-  task :makeuser, :user, :pass do |t, args|
+  task :makeuser, [:user, :pass] => :environment do |t, args|
     Auth.create(
       :user => args[:user],
       :pass => args[:pass],
@@ -37,7 +43,7 @@ namespace :invoice do
   end
   
   desc 'Gets API'
-  task :apikey, :user do |t, args|
+  task :apikey, [:user] => :environment do |t, args|
     @user = Auth.first(:user => args[:user])
     unless @user.nil?
       puts @user.apikey
@@ -45,7 +51,7 @@ namespace :invoice do
   end
   
   desc 'Adds an app'
-  task :makeapp, :name, :stub, :start_at do |t, args|
+  task :makeapp, [:name, :stub, :start_at] => :environment do |t, args|
     App.create(
       :name => args[:name],
       :stub => args[:stub],
@@ -54,7 +60,7 @@ namespace :invoice do
   end
   
   desc 'Adds an invoice'
-  task :makeinvoice, :purpose, :app_stub do |t, args|
+  task :makeinvoice, [:purpose, :app_stub] => :environment do |t, args|
     inv = Invoice.add_new(args[:purpose], args[:app_stub])
     unless inv.nil?
       puts inv.number
