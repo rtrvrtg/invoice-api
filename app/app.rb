@@ -11,7 +11,7 @@ class InvoiceApps < Sinatra::Base
   helpers Sinatra::Jsonp
   register Sinatra::RespondTo
   
-  get "/apps/index.jsonp" do
+  get "/apps/index" do
     enforce_valid_key!
     @result = App.all
     
