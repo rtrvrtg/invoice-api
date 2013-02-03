@@ -9,6 +9,7 @@ module Apps
   def self.registered(app)
     app.helpers Sinatra::APIKeyAuth
     app.helpers Sinatra::Jsonp
+    app.register Sinatra::RespondTo
 
     app.get "/apps/index" do
       enforce_valid_key!
