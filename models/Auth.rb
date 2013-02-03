@@ -5,11 +5,12 @@ class Auth
   include DataMapper::Resource
   property :id,       Serial
   property :user,     Text,       :required => true,    :unique => true
-  property :pass,     BCryptHash, :reader => :private,  :required => true, :unique => true
+  property :pass,     BCryptHash, :required => true,    :unique => true
   property :apikey,   APIKey,     :writer => :private,  :unique => true
   
   def self.auth_user(user, pass)
-    Auth.first(:user => user, :pass => pass)
+    user = Auth.first(:user => user)
+    user if user.try(:pass) == pass
   end
   
   def self.auth_api(apikey)
