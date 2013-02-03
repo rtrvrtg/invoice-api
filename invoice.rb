@@ -13,8 +13,6 @@ Dir[File.expand_path('app/*.rb', File.dirname(__FILE__))].each {|f| require f }
 # ##### APPLICATION
 
 class InvoicesApp < Sinatra::Base
-  register Sinatra::RespondTo
-
   register Base
   register Apps
   register Invoices
