@@ -21,7 +21,9 @@ gem 'activeresource', '3.0.10'
 
 gem 'haml'
 
-gem 'sinatra-respond_to'
+gem 'sinatra-respond_to', :require => 'sinatra/respond_to',
+                          :git => 'git://github.com/cehoffman/sinatra-respond_to.git',
+                          :ref => '0b8892eb188fb7ba9d1'
 gem 'sinatra-jsonp', :require => 'sinatra/jsonp'
 gem 'rack_csrf'
 

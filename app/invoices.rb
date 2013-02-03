@@ -9,6 +9,7 @@ module Invoices
   def self.registered(app)
     app.helpers Sinatra::APIKeyAuth
     app.helpers Sinatra::Jsonp
+    app.register Sinatra::RespondTo
 
     app.get "/invoices/index" do
       enforce_valid_key!
