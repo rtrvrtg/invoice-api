@@ -1,7 +1,6 @@
 require 'rubygems'
 require 'sinatra/base'
 require 'sinatra/jsonp'
-require 'sinatra-websocket'
 require 'fileutils'
 
 # Pulls in settings and required gems.
