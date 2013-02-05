@@ -25,9 +25,15 @@ module Invoices
 
       @date_start = Date.new(params[:year].to_i, 1, 1)
       @date_end = Date.new(params[:year].to_i, 12, 31)
+      
+      @app = App.first(:stub => params[:stub])
+      
+      if @app.nil?
+        halt 400
+      end
 
       @result = Invoice.all(
-        :app_id => App.first(:stub => params[:stub]).id,
+        :app_id => @app.id,
         :created_at => @date_start..@date_end
       )
 
@@ -41,15 +47,22 @@ module Invoices
 
       @date_start = Date.new(params[:year].to_i, 1, 1)
       @date_end = Date.new(params[:year].to_i, 12, 31)
+      
+      @app = App.first(:stub => params[:stub])
+      
+      if @app.nil?
+        halt 400
+      end
 
       @result = Invoice.first(
         :invoice_id => params[:invoice_id].to_i,
-        :app_id => App.first(:stub => params[:stub]).id,
+        :app_id => @app.id,
         :created_at => @date_start..@date_end
       )
 
       respond_to do |r|
         r.json  { jsonp @result }
+        r.html  { haml :invoice_tpl, :locals => { :inv => @result } }
       end
     end
 
@@ -59,7 +72,7 @@ module Invoices
       inv = Invoice.add_new(params[:purpose], params[:app_stub])
 
       if inv.nil?
-        500
+        halt 500
       end
 
       respond_to do |r|

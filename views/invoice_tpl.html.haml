@@ -1,0 +1,89 @@
+!!! 5
+%html
+  %head
+    %title= "Invoice"
+    %script{:src => "http://code.jquery.com/jquery-1.9.1.min.js"}
+  %body{:id => "hisaishi-admin--lyrics"}
+    %header
+      %h1= "SMASH!"
+      %h2= "Tax Invoice"
+      %p
+        = "Date: "
+        %span{ :contenteditable => "true" }= "(date)"
+      %p
+        = "To: "
+        %span{ :contenteditable => "true" }= "(blah)"
+      %p= "Invoice No: #{inv.number}"
+      %p= "ABN: 46 310 471 217"
+      %p
+        = "Suite 808"
+        %br
+        = "187 Liverpool St."
+        %br
+        = "Sydney NSW 2000"
+    %section
+      %table{:id => "invoice-table"}
+        %thead
+          %tr
+            %th= "Description"
+            %th= "Amount"
+        %tbody
+          %tr
+            %td
+              %span{ :class => "name", :contenteditable => "true" }= "item"
+            %td
+              %span{ :class => "price", :contenteditable => "true" }= "$0.00"
+              %a{:class => 'row-remove', :href => '#'}= "Remove"
+        %tfoot
+          %tr
+            %td
+              %a{:class => 'row-add', :href => '#'}= "Add"
+            %td
+              %p
+                = "(Without GST) Total: "
+                %span{:class => "subtotal"}= "0.00"
+              %p
+                = "GST: "
+                %span{:class => "gst"}= "0.00"
+              %p
+                = "(Incl. GST) Total: "
+                %span{:class => "total"}= "0.00"
+    %section
+      %h2= "SMASH! 2013 #{inv.app.name} Terms and Conditions"
+      != haml :"_#{inv.app.stub}"
+    :javascript
+      $(document).ready(function(){
+        var invTable = $('#invoice-table tbody');
+        
+        $('.row-add').click(function(e){
+          e.preventDefault();
+          var row = invTable.children('tr').first();
+          var clone = row.clone(true);
+          clone.find('.name[contenteditable]').text('Item');
+          clone.find('.price[contenteditable]').text('0.00');
+          clone.appendTo(invTable);
+          totalItems();
+        });
+        
+        $('.row-remove').click(function(e){
+          e.preventDefault();
+          if (invTable.children('tr').length > 1) {
+            $(this).closest('tr').remove();
+          }
+          totalItems();
+        });
+        
+        var totalItems = function() {
+          var total = 0;
+          $('.price[contenteditable]', invTable).each(function(){
+            total += parseFloat($(this).text());
+          });
+          $('.subtotal').text(total.toFixed(2));
+          $('.gst').text((total * 0.1).toFixed(2));
+          $('.total').text((total * 1.1).toFixed(2));
+        };
+        
+        $('[contenteditable]', invTable).blur(function(e){
+          totalItems();
+        });
+      });
