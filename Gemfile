@@ -29,11 +29,10 @@ gem 'rack_csrf'
 
 gem 'activesupport'
 
-gem 'sinatra-websocket'
-
 group :development, :test do
   gem 'rspec'
   gem 'capybara'
   gem "factory_girl", "~> 3.0"
   gem 'ffaker'
+  gem 'thin'
 end
