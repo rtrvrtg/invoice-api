@@ -26,6 +26,7 @@ gem 'sinatra-respond_to', :require => 'sinatra/respond_to',
                           :ref => '0b8892eb188fb7ba9d1'
 gem 'sinatra-jsonp', :require => 'sinatra/jsonp'
 gem 'rack_csrf'
+gem 'thin'
 
 gem 'activesupport'
 
