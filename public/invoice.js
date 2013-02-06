@@ -23,6 +23,12 @@ $(document).ready(function(){
     var total = 0;
     $('.price[contenteditable]', invTable).each(function(){
       var val = parseFloat($(this).text());
+      
+      if ($(this).hasClass('price') && isNaN(val)) {
+        $(this).text('0.00');
+        val = 0;
+      }
+      
       total += val;
       $(this).text(val.toFixed(2));
     });

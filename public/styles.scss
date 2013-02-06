@@ -1,5 +1,22 @@
 body {
   font-family: sans-serif;
+  
+  @media screen {
+    
+    *[contenteditable="true"] {
+      min-width: 20px;
+      min-height: 20px;
+      
+      background-color: #ddd;
+      border-bottom: 1px dotted #666;
+      
+      &:focus {
+        background-color: #fff;
+        outline: none;
+      }
+    }
+    
+  }
 }
 
 header, section {
@@ -9,7 +26,6 @@ header, section {
     text-transform: uppercase;
   }
 }
-
 
 .header-left {
   float: left;
@@ -77,7 +93,6 @@ th, td {
     content: "$";
   }
 }
-
 
 .row-button {
   display: inline-block;
