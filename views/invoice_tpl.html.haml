@@ -148,13 +148,15 @@
                 var newDate = $(this).datepicker('getDate');
                 if (newDate) {
                   newDate.setDate(newDate.getDate() + +(bits[1]));
-                  // alert(bits[1] + ',' + newDate);
                 }
                 
-                $('#' + bits[0])
+                var target = $('#' + bits[0]);
+                
+                target
                   .datepicker("option", "minDate", newDate)
-                  .datepicker("setDate", newDate)
-                  .datepicker('refresh').hide();
+                  .datepicker("setDate", newDate);
+                var dpDate = target.val();
+                target.parent().find("[contenteditable=false]").text(dpDate);
               }
             }
           }
