@@ -1,0 +1,122 @@
+body {
+  font-family: sans-serif;
+}
+
+header, section {
+  clear: both;
+  
+  h2 {
+    text-transform: uppercase;
+  }
+}
+
+
+.header-left {
+  float: left;
+  
+  .header-left-details {
+    clear: both;
+  }
+}
+.header-right {
+  float: right;
+}
+img.logo {
+  float: left;
+  margin-right: 2pt;
+  margin-bottom: 2pt;
+}
+
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.5em;
+}
+
+#content {
+  table {
+    width: 100%;
+    
+    thead {
+      tr {
+        th {
+          border-top: 4px solid black;
+          border-bottom: 1px solid black;
+        }
+      }
+    }
+    
+    tfoot {
+      tr {
+        th {
+          border-top: 1px solid black;
+          border-bottom: 2px solid black;
+        }
+      }
+    }
+    
+    tbody {
+      tr {
+        td {
+          border-top: 1px solid black; 
+        }
+        
+        &:first-child td {
+          border-top: 0px none;
+        }
+      }
+    }
+  }
+  
+  .price-col {
+    width: 33%;
+    text-align: right;
+  }
+  
+  .price:before {
+    content: "$";
+  }
+}
+
+
+.row-button {
+  display: inline-block;
+  text-align: center;
+  border-radius: 1em;
+  border: 1px solid #000;
+  background: #ccc;
+  color: black;
+  text-decoration: none;
+  min-width: 1em;
+  min-height: 1em;
+  
+  &.add {
+    background: #080;
+    border-color: #0b0;
+    color: white;
+  }
+  
+  &.remove {
+    background: #800;
+    border-color: #b00;
+    color: white;
+  }
+}
+
+.legalese {
+  font-size: 0.8em;
+}
+
+#terms {
+  page-break-before: always;
+  
+  .terms-content {
+    clear: both;
+  }
+}
+
+@media print {
+  button, .row-button {
+    display: none;
+  }
+}

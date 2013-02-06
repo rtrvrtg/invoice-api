@@ -2,94 +2,21 @@
 %html
   %head
     %title= "Invoice"
-    :css
-      body {
-        font-family: sans-serif;
-      }
-      .header-left {
-        float: left;
-      }
-      .header-right {
-        float: right;
-      }
-      section {
-        clear: both;
-      }
-      header h2 {
-        text-transform: uppercase;
-      }
-      #content table {
-        width: 100%;
-      }
-      #content thead tr th {
-        border-top: 4px solid black;
-        border-bottom: 1px solid black;
-      }
-      #content tfoot tr th {
-        border-top: 1px solid black;
-        border-bottom: 2px solid black;
-      }
-      #content tbody tr td {
-        border-top: 1px solid black;
-      }
-      #content tbody tr:first-child td {
-        border-top: 0px none;
-      }
-      th, td {
-        text-align: left;
-        vertical-align: top;
-        padding: 0.5em;
-      }
-      #content .price-col {
-        width: 33%;
-        text-align: right;
-      }
-      .price:before {
-        content: "$";
-      }
-      .row-add, .row-remove {
-        display: inline-block;
-        text-align: center;
-        border-radius: 1em;
-        border: 1px solid #000;
-        background: #ccc;
-        color: black;
-        text-decoration: none;
-        min-width: 1em;
-        min-height: 1em;
-      }
-      .row-add {
-        background: #080;
-        border-color: #0b0;
-        color: white;
-      }
-      .row-remove {
-        background: #800;
-        border-color: #b00;
-        color: white;
-      }
-      .legalese {
-        font-size: 0.8em;
-      }
-      @media print {
-        button, .row-add, .row-remove {
-          display: none;
-        }
-      }
-    %link{:rel => "stylesheet", :href => "http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css"}
-    %script{:src => "http://code.jquery.com/jquery-1.9.1.min.js"}
-    %script{:src => "http://code.jquery.com/ui/1.10.0/jquery-ui.js"}
-  %body{:id => "hisaishi-admin--lyrics"}
+    %link{ :rel => "stylesheet", :type => "text/css", :href => "/styles" }
+    %link{ :rel => "stylesheet", :href => "http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" }
+    %script{ :src => "http://code.jquery.com/jquery-1.9.1.min.js" }
+    %script{ :src => "http://code.jquery.com/ui/1.10.0/jquery-ui.js" }
+  %body{ :id => "hisaishi-admin--lyrics"}
     %header
-      %hgroup{:class => "header-left"}
-        %img{:src => "/smash-logo.png"}
-        %table
+      %hgroup{ :class => "header-left" }
+        %img{ :src => "/smash-logo.png", :class => "logo" }
+        %table{ :class => "header-left-details" }
           %tbody
             %tr
               %th= "Date: "
               %td
                 %span{ :contenteditable => "false" }= ""
-                %input{ :type => "hidden", :class => "datepicker" }
+                %input{ :type => "hidden", :class => "datepicker", :id => "issue-date", 'data-chain' => "payment-due,28" }
             %tr
               %th= "To: "
               %td
@@ -97,7 +24,7 @@
                   %span{ :contenteditable => "true" }= "Sponsor Name"
                 %br
                 %span{ :contenteditable => "true" }= "Sponsor Address"
-      %hgroup{:class => "header-right"}
+      %hgroup{ :class => "header-right" }
         %h2= "Tax Invoice"
         %p
           %strong= "Invoice No: #{inv.number}"
@@ -108,8 +35,8 @@
           = "187 Liverpool St."
           %br
           = "Sydney NSW 2000"
-    %section{:id => "content"}
-      %table{:id => "invoice-table"}
+    %section{:id => "content" }
+      %table{ :id => "invoice-table" }
         %thead
           %tr
             %th= "Description"
@@ -120,21 +47,21 @@
               %span{ :class => "name", :contenteditable => "true" }= "item"
             %td{ :class => "price-col" }
               %span{ :class => "price", :contenteditable => "true" }= "0.00"
-              %a{ :class => 'row-remove', :href => '#', :title => "Remove row" }= "-"
+              %a{ :class => 'row-button remove', :href => '#', :title => "Remove row" }= "-"
         %tfoot
           %tr
             %th
-              %a{ :class => 'row-add', :href => '#', :title => "Add row" }= "+"
+              %a{ :class => 'row-button add', :href => '#', :title => "Add row" }= "+"
             %th{ :class => "price-col" }
               %p
                 = "(Without GST) Total: "
-                %span{:class => "subtotal price"}= "0.00"
+                %span{ :class => "subtotal price" }= "0.00"
               %p
                 = "GST: "
-                %span{:class => "gst price"}= "0.00"
+                %span{ :class => "gst price" }= "0.00"
               %p
                 = "(Incl. GST) Total: "
-                %span{:class => "total price"}= "0.00"
+                %span{ :class => "total price" }= "0.00"
       %h2= "Payment Methods:"
       %ul
         %li
@@ -152,15 +79,17 @@
         %strong
           = "Payment is due by: "
           %span{ :contenteditable => "false" }= ""
-          %input{ :type => "hidden", :class => "datepicker" }
+          %input{ :type => "hidden", :class => "datepicker", :id => "payment-due" }
       %p{:class => "legalese"}
         %strong
           = "This document forms part of the contract between SMASH Inc (the ‘Organiser’, ‘We’ or ‘Us’) and the signatory (the ‘Exhibitor’ or ‘You’). It is a condition of Your attendance at the 2013 SMASH! Sydney Manga and Anime Show (the ‘Convention’) that you agree to, and abide by, the following."
           %br
           = "ANY BREACH OF THESE TERMS MAY RESULT IN REMOVAL FROM THE CONVENTION."
-    %section
+    %section{ :id => "terms" }
+      %img{ :src => "/smash-logo.png", :class => "logo" }
       %h2= "SMASH! 2013 #{inv.app.name} Terms and Conditions"
-      != haml :"_#{inv.app.stub}"
+      %div{ :class => "terms-content" }
+        != haml :"_#{inv.app.stub}"
     :javascript
       $(document).ready(function(){
         var invTable = $('#invoice-table tbody');
@@ -202,8 +131,32 @@
         $(".datepicker").datepicker({
           dateFormat: 'DD, d MM yy',
           showOn: "button",
-          onClose: function(dateText, inst) {
-            $(this).parent().find("[contenteditable=false]").focus().html(dateText).blur();
+          onSelect: function(dateText, inst) {
+            var internalDate = [
+              inst.selectedYear,
+              inst.selectedMonth,
+              inst.selectedDay
+            ].join('-');
+            
+            $(this).parent().find("[contenteditable=false]").attr('data-internaldate', internalDate).focus().html(dateText).blur();
+            
+            if (!!$(this).attr('data-chain')) {
+              var chainParts = $(this).attr('data-chain').split('|');
+              for (var i in chainParts) {
+                var bits = chainParts[i].split(',');
+                
+                var newDate = $(this).datepicker('getDate');
+                if (newDate) {
+                  newDate.setDate(newDate.getDate() + +(bits[1]));
+                  // alert(bits[1] + ',' + newDate);
+                }
+                
+                $('#' + bits[0])
+                  .datepicker("option", "minDate", newDate)
+                  .datepicker("setDate", newDate)
+                  .refresh().hide();
+              }
+            }
           }
         });
       });
