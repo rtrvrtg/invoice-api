@@ -94,7 +94,7 @@
       $(document).ready(function(){
         var invTable = $('#invoice-table tbody');
         
-        $('.row-add').click(function(e){
+        $('.row-button.add').click(function(e){
           e.preventDefault();
           var row = invTable.children('tr').first();
           var clone = row.clone(true);
@@ -104,7 +104,7 @@
           totalItems();
         });
         
-        $('.row-remove').click(function(e){
+        $('.row-button.remove').click(function(e){
           e.preventDefault();
           if (invTable.children('tr').length > 1) {
             $(this).closest('tr').remove();
