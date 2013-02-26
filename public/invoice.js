@@ -52,14 +52,28 @@ $(document).ready(function(){
       total += val;
       $(this).text(val.toFixed(2));
     });
-    $('.subtotal').text((total - gst).toFixed(2));
-    $('.gst').text(gst.toFixed(2));
+    
     $('.total').text(total.toFixed(2));
+    
+    $('.gst').not('.custom').text(gst.toFixed(2));
+    if ($('.gst').hasClass('custom')) {
+      gst = parseFloat($('.gst').text());
+    }
+    
+    $('.subtotal').text((total - gst).toFixed(2));
     
     updatePrices();
   };
   
   $('[contenteditable]', invTable).blur(function(e){
+    if ($(this).hasClass('gst')) {
+      if ($(this).text() != '') {
+        $(this).addClass('custom');
+      }
+      else {
+        $(this).removeClass('custom');
+      }
+    }
     totalItems();
   });
   
