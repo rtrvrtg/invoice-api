@@ -5,9 +5,9 @@ class Invoice
   include DataMapper::Resource
   property :id,           Serial
   property :app_id,       Integer,    :required => true
-  property :invoice_id,   Integer,    :writer => :private
+  property :invoice_id,   Integer
   property :purpose,      String,     :required => true
-  property :number,       String,     :writer => :private, :unique => true
+  property :number,       String,     :unique => true
   
   property :created_at, DateTime, :default => lambda{ |p,s| DateTime.now}
   property :updated_at, DateTime, :default => lambda{ |p,s| DateTime.now}
