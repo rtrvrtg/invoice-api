@@ -32,7 +32,7 @@ $(document).ready(function(){
   };
   
   var totalItems = function() {
-    var gst = 0, total = 0;
+    var gst = 0, total = 0, gstRate = 0.1;
     $('.price[contenteditable]', invTable).each(function(){
       var val = parseFloat($(this).text());
       
@@ -46,7 +46,7 @@ $(document).ready(function(){
         gst += 0;
       }
       else {
-        gst += (0.1 * val);
+        gst += (val * (gstRate / (1 + gstRate)));
       }
       
       total += val;
