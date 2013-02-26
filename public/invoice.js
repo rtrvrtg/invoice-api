@@ -41,7 +41,7 @@ $(document).ready(function(){
         val = 0;
       }
       
-      var name = $(this).closest('tr').find('.name').val();
+      var name = $(this).closest('tr').find('.name').text();
       if (name.toLowerCase().indexOf('ex gst') >= 0) {
         gst += 0;
       }
