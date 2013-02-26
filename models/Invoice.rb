@@ -61,11 +61,14 @@ class Invoice
     end
     
     inv = Invoice.new
-    inv.purpose = purpose
-    inv.app_id = @app.id
-    inv.save
+    inv.attributes = { :purpose => purpose, :app_id => @app.id }
+    saved = inv.save
     
-    return inv
+    if saved
+      return inv
+    else
+      return nil
+    end
   end
   
 end
