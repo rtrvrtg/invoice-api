@@ -19,8 +19,20 @@ $(document).ready(function(){
     totalItems();
   });
   
+  var updatePrices = function() {
+    $('.price').each(function(){
+      var val = $(this).val();
+      if (val < 0) {
+        $(this).addClass('negative');
+      }
+      else {
+        $(this).removeClass('negative');
+      }
+    });
+  };
+  
   var totalItems = function() {
-    var total = 0;
+    var gst = 0, total = 0;
     $('.price[contenteditable]', invTable).each(function(){
       var val = parseFloat($(this).text());
       
@@ -29,12 +41,22 @@ $(document).ready(function(){
         val = 0;
       }
       
+      var name = $(this).closest('tr').find('.name').val();
+      if (name.toLowerCase().indexOf('ex gst') >= 0) {
+        gst += 0;
+      }
+      else {
+        gst += (0.1 * val);
+      }
+      
       total += val;
       $(this).text(val.toFixed(2));
     });
-    $('.subtotal').text(total.toFixed(2));
-    $('.gst').text((total * 0.1).toFixed(2));
-    $('.total').text((total * 1.1).toFixed(2));
+    $('.subtotal').text((total - gst).toFixed(2));
+    $('.gst').text(gst.toFixed(2));
+    $('.total').text(total.toFixed(2));
+    
+    updatePrices();
   };
   
   $('[contenteditable]', invTable).blur(function(e){

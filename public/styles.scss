@@ -92,6 +92,10 @@ th, td {
   .price:before {
     content: "$";
   }
+  
+  .price.negative {
+    color: #900;
+  }
 }
 
 .row-button {
