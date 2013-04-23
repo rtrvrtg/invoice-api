@@ -6,7 +6,7 @@ class Invoice
   property :id,           Serial
   property :app_id,       Integer,    :required => true
   property :invoice_id,   Integer
-  property :purpose,      String,     :required => true
+  property :purpose,      String,     :required => true, :length => 255
   property :number,       String,     :unique => true
   
   property :created_at, DateTime, :default => lambda{ |p,s| DateTime.now}
