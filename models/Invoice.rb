@@ -7,8 +7,8 @@ class Invoice
   property :id,           Serial
   property :app_id,       Integer,    :required => true
   property :invoice_id,   Integer
-  property :purpose,      String,     :required => true, :length => 255
-  property :number,       String,     :unique => true
+  property :purpose,      Text,     :required => true
+  property :number,       Text,     :unique => true
   
   property :created_at, DateTime, :default => lambda{ |p,s| DateTime.now}
   property :updated_at, DateTime, :default => lambda{ |p,s| DateTime.now}
@@ -67,6 +67,7 @@ class Invoice
     inv = Invoice.new
     inv.attributes = { :purpose => purpose, :app_id => @app.id }
     saved = inv.save
+    logger.info "Invoice: #{inv.inspect}"
     
     if saved
       logger.info "Successfully saved new invoice"
