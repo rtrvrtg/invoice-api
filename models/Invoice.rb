@@ -60,12 +60,14 @@ class Invoice
       logger.info "no app found for #{app_stub}"
       return nil
     end
+    logger.info "Found app #{@app.id}"
     
     inv = Invoice.new
     inv.attributes = { :purpose => purpose, :app_id => @app.id }
     saved = inv.save
     
     if saved
+      logger.info "Successfully saved new invoice"
       return inv
     else
       logger.info "Failed validation for #{app_stub}, #{purpose}"

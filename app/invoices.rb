@@ -68,6 +68,7 @@ module Invoices
 
     app.post '/invoice/new' do
       enforce_valid_key!
+      logger.info "trying to generate new invoice for #{params[:purpose]}, #{params[:app_stub]}"
 
       inv = Invoice.add_new(params[:purpose], params[:app_stub])
 
