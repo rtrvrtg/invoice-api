@@ -1,3 +1,4 @@
+require 'logger'
 require 'digest/sha1'
 require 'dm-types'
 
@@ -55,6 +56,7 @@ class Invoice
   
   def self.add_new(purpose, app_stub)
     @app = App.first(:stub => app_stub)
+    logger = Logger.new(STDOUT)
     
     if @app.nil?
       logger.info "no app found for #{app_stub}"

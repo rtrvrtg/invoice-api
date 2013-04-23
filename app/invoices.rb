@@ -1,3 +1,4 @@
+require 'logger'
 require 'sinatra/base'
 require 'sinatra/jsonp'
 require 'sinatra/respond_to'
@@ -68,6 +69,7 @@ module Invoices
 
     app.post '/invoice/new' do
       enforce_valid_key!
+      logger = Logger.new(STDOUT)
       logger.info "trying to generate new invoice for #{params[:purpose]}, #{params[:app_stub]}"
 
       inv = Invoice.add_new(params[:purpose], params[:app_stub])
