@@ -57,7 +57,7 @@ class Invoice
     @app = App.first(:stub => app_stub)
     
     if @app.nil?
-      puts "no app found for #{app_stub}"
+      logger.info "no app found for #{app_stub}"
       return nil
     end
     
@@ -68,9 +68,9 @@ class Invoice
     if saved
       return inv
     else
-      puts "Failed validation for #{app_stub}, #{purpose}"
+      logger.info "Failed validation for #{app_stub}, #{purpose}"
       inv.errors.each do |e|
-        puts e
+        logger.info e
       end
       return nil
     end
