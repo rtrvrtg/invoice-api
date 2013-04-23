@@ -72,6 +72,7 @@ module Invoices
       inv = Invoice.add_new(params[:purpose], params[:app_stub])
 
       if inv.nil?
+        puts "halting now because no invoice was found"
         halt 500
       end
 
