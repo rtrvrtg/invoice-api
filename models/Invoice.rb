@@ -14,7 +14,17 @@ class Invoice
   property :updated_at, DateTime, :default => lambda{ |p,s| DateTime.now}
   
   before :save do
-    starts_at = 1
+    create_invoice_id
+    last = Invoice.find_last_by_year(self.app.stub)
+    count = last + 1
+    while Invoice.find_by_invoice_number(self.number)
+      create_invoice_id
+      count = count + 1
+    end
+  end
+
+  def create_invoice_id starts_at = nil
+    starts_at = 1 if starts_at = nil
     
     @app = self.app
     if @app.start_at >= starts_at
@@ -39,6 +49,10 @@ class Invoice
   
   def app
     App.first(:id => self.app_id)
+  end
+
+  def self.find_by_invoice_number(num)
+    Invoice.first(:number => num)
   end
   
   def self.find_last_by_year(stub, year = Date.today.year)
