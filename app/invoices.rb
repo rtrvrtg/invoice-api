@@ -72,7 +72,16 @@ module Invoices
       logger = Logger.new(STDOUT)
       logger.info "trying to generate new invoice for #{params[:purpose]}, #{params[:app_stub]}"
 
-      inv = Invoice.add_new(params[:purpose], params[:app_stub])
+      begin
+        inv = Invoice.add_new(params[:purpose], params[:app_stub])
+      rescue StandardError => e
+        logger.error e.class.to_s
+        logger.error e.message
+        e.backtrace.each do |l|
+          logger.error l
+        end
+        halt 500
+      end
 
       if inv.nil?
         logger.info "halting now because no invoice was found"
