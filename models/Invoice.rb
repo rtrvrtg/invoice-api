@@ -7,8 +7,8 @@ class Invoice
   property :id,           Serial
   property :app_id,       Integer,    :required => true
   property :invoice_id,   Integer
-  property :purpose,      Text,     :required => true
-  property :number,       Text,     :unique => true
+  property :purpose,      Text
+  property :number,       Text
   
   property :created_at, DateTime, :default => lambda{ |p,s| DateTime.now}
   property :updated_at, DateTime, :default => lambda{ |p,s| DateTime.now}
