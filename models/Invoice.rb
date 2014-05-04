@@ -15,30 +15,19 @@ class Invoice
   
   before :save do
     create_invoice_id
-    last = Invoice.find_last_by_year(self.app.stub)
-    count = last + 1
     while Invoice.find_by_invoice_number(self.number)
       create_invoice_id
-      count = count + 1
     end
   end
 
-  def create_invoice_id starts_at = nil
-    starts_at = 1 if starts_at = nil
-    
+  def fourdigitrand
+    rand(10 ** 4).to_s.rjust(4,'0')
+  end
+
+  def create_invoice_id
     @app = self.app
-    if @app.start_at >= starts_at
-      starts_at = @app.start_at
-    end
     
-    last = Invoice.find_last_by_year(@app.stub)
-    unless last.nil?
-      if last.invoice_id >= starts_at
-        starts_at = last.invoice_id + 1
-      end
-    end
-    
-    self.invoice_id = starts_at
+    self.invoice_id = fourdigitrand
     
     self.number = [
       @app.stub,
